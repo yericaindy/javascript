@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script type="assets/js/jquery.min.js"></script>
+    <script type="assets/js/popper.min.js"></script>
+    <script type="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      var edit = false;
+      var indeks = 0;
+      function Tambah(){
+        edit = false;
+        //mengosogkan form
+        document.getElementById('nama').value ="";
+        document.getElementById('jurusan').value="";
+        document.getElementById('alamat').value="";
+      }
+      function Edit(index){
+        edit = true;
+        indeks = index;
+        var table = document.getElementById('table-siswa');
+        //mengambil data dari <table>
+        var nama = table.row[index].cells[0].innerHTML;
+        var jurusan = table.row[index].cells[1].innerHTML;
+        var alamat = table.row[index].cells[2].innerHTML;
+
+        //masukkan data ke form
+        document.getElementById('nama').value = nama;
+        document.getElementById('jurusan').value = jurusan;
+        document.getElementById('alamat').value = alamat;
+      }
+      function Simpan(){
+        var table = document.getElementById('tabel-siswa');
+        //menampung data dari form
+        var nama = document.getElementById('nama').value;
+        var jurusan = document.getElementById('jurusan').value;
+        var alamat = document.getElementById('alamat').value;
+
+        //jika aksinya diedit
+        if(edit){
+          table.rows[indeks].cells[0].innerHTML = nama;
+          table.rows[indeks].cells[1].innerHTML = nama;
+          table.rows[indeks].cells[2].innerHTML = nama;
+        //jia aksinya ditambah
+      }else{
+        var element = "";
+        element += "<tr>";
+        element += "<tr>"+nama+"</td>";
+        element += "<tr>"+jurusan+"</td>";
+        element += "<tr>"+alamat+"</td>";
+        element += "<tr>";
+        element += '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal" ';
+        element += 'onclick="Edit(this.parentElement.rowIndex)">Edit</button>';
+        element += '<button type="button" class="btn btn-sm btn-danger" ';
+        element += 'onclick="Hapus(this.parentElement.parentElement.rowIndex)">Hapus</button>';
+        element += "</td>";
+        element += "</tr>";
+        table.innerHTML += element;
+      }
+    }
+
+      function Hapus(index){
+        var tabel = document.getElementById('tabel-siswa');
+        tabel.deleteRow(index);
+      }
+    </script>
+
+  </head>
+  <body>
+    <div class="container">
+      <table class="table" id="table-siswa">
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Jurusan</th>
+            <th>Alamat</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Noerdeer</td>
+            <td>Rekayasa Perangkat Lunak</td>
+            <td>Blitar</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-info" data-toggler="modal"
+              onclick="Edit(this.parentElement.parentElement.rowIndex)">
+               Edit
+              </button>
+              <button type="button" clas="btn btn-sm btn-danger"
+              onclick="Hapus(this.parentElement.parentElement.rowIndex)">
+                Hapus
+              </button>
+            </td>
+          </tr>
+
+          <td>Atayew</td>
+          <td>Teknik Komputer dan Jaringan</td>
+          <td>Madiun</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-info" data-toggl0e="modal" data-target="#modal"
+            onclick="Edit(this.parentElement.parentElement.rowIndex)">
+              Edit
+            </button>
+            <button type="button" class="btn btn-sm btn-danger"
+            onclick="Hapus(this.parentElement.parentElement.rowIndex)">
+              Hapus
+            </button>
+          </td>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal"
+      onclick="Tambah()">
+      </button>
+    </div>
+    <!--modal -->
+    <div class="modal" id="modal">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Form Modal</h4>
+            <span class="close" data-dismiss="modal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Nama</label>
+              <div class="col-sm-12">
+                <input type="text" id="nama" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Jurusan</label>
+              <div class="col-sm-12">
+                <select class="form-control" id="jurusan">
+                  <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+                  <option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan</option>
+                </select>
+              </div>
+           </div>
+           <div class="form-group">
+             <label>Alamat</label>
+             <div class="col-sm-12">
+               <input type="text" id="alamat" class="form-control">
+             </div>
+           </div>
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-sm btn-success" data-dismiss="modal"
+           onclick="simpan();">
+           Simpan
+           </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
